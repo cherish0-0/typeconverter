@@ -7,6 +7,7 @@ import springmvc.typeconverter.converter.IntegerToStringConverter;
 import springmvc.typeconverter.converter.IpPortToStringConverter;
 import springmvc.typeconverter.converter.StringToIntegerConverter;
 import springmvc.typeconverter.converter.StringToIpPortConverter;
+import springmvc.typeconverter.formatter.MyNumberFormatter;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -19,9 +20,14 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new StringToIntegerConverter());
-        registry.addConverter(new IntegerToStringConverter());
+
+        // 우선순위 때문에 주석처리 (둘 다 문자 <-> 숫자 변환일 때 converter가 우선순위가 높음)
+//        registry.addConverter(new StringToIntegerConverter());
+//        registry.addConverter(new IntegerToStringConverter());
         registry.addConverter(new StringToIpPortConverter());
         registry.addConverter(new IpPortToStringConverter());
+
+        // 포맷터 등록
+        registry.addFormatter(new MyNumberFormatter());
     }
 }
